@@ -45,7 +45,7 @@ export default defineConfig({
     screenshot: 'on',
     
     // Run headless by default, but allow overriding via the environment
-    headless: false,
+    headless: true,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
