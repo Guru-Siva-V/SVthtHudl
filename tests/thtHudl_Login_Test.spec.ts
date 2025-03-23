@@ -38,9 +38,9 @@ test.describe('Hudl Login Tests', () => {
     expect(page.url()).toContain('https://www.hudl.com/home');
 
     // Verify the login screen standard menu visual look is as expected with the Login Landing Page standard menu visual look image stored
-      // const element_LILP_Menu= await page.locator('[id="ssr-webnav"]');
-      // await expect (element_LILP_Menu).toHaveScreenshot('HudlLoginSuccess_ValidCredsSpace_PageMnu.png');
-      // await expect.soft(element_LILP_Menu).toHaveScreenshot('HudlLoginSuccess_ValidCredsSpace_PageMnu.png', { maxDiffPixelRatio: 0.1 });
+      const element_LILP_Menu= await page.locator('[id="ssr-webnav"]');
+      await expect (element_LILP_Menu).toHaveScreenshot('HudlLoginSuccess_ValidCredsSpace_PageMnu.png');
+      await expect.soft(element_LILP_Menu).toHaveScreenshot('HudlLoginSuccess_ValidCredsSpace_PageMnu.png', { maxDiffPixelRatio: 0.1 });
     // await expect(page).toHaveScreenshot('HudlLoginSuccess_ValidCreds_Page.png');
     // await expect.soft(page).toHaveScreenshot('HudlLoginSuccess_ValidCreds_Page.png', { maxDiffPixelRatio: 0.05 });
 
@@ -121,9 +121,9 @@ test.describe('Hudl Login Tests', () => {
     const errorMessage = page.locator('[id="error-element-password"]');
     await expect(errorMessage).toContainText('Your email or password is incorrect. Try again.');
 
-      // // Verify the login failure (for wrong password only) screen visual look is as expected with the Login failure page image stored
-      // await expect(page).toHaveScreenshot('HudlLogin_InvalidPassword_Fail_Page.png');
-      // await expect.soft(page).toHaveScreenshot('HudlLogin_InvalidPassword_Fail_Page.png', { maxDiffPixelRatio: 0.1 });
+      // Verify the login failure (for wrong password only) screen visual look is as expected with the Login failure page image stored
+      await expect(page).toHaveScreenshot('HudlLogin_InvalidPassword_Fail_Page.png');
+      await expect.soft(page).toHaveScreenshot('HudlLogin_InvalidPassword_Fail_Page.png', { maxDiffPixelRatio: 0.1 });
   });
 
   test('Login failure with invalid credentials: email/password', async ({ page }) => {
