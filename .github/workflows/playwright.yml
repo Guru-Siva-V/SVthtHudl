@@ -56,8 +56,12 @@ jobs:
     - name: Tag Successful Run
       if: success()
       run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "actions@github.com"
         git tag -a "v$(date +%Y%m%d-%H%M%S)" -m "Tests passed"
         git push origin --tags
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure write access
 
     # Commit Updated Snapshots
     - name: Commit Updated Snapshots
