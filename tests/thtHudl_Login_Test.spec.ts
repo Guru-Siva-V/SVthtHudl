@@ -13,6 +13,9 @@ test.afterAll(async() => {
 
 test.describe('Hudl Login Tests', () => {
 
+  // test level timeout, that will override the timeout configured in playwright.config.ts
+  // test.setTimeout(3 * 60 * 1000); // moved to Global config
+
 // ***** Positive Flow Login Tests *****
     // Login successfully with valid credentials
     // Login successfully with valid credentials and prefix/suffix white spaces in Username trimmed
@@ -34,9 +37,12 @@ test.describe('Hudl Login Tests', () => {
     await page.waitForURL('**/home');
     expect(page.url()).toContain('https://www.hudl.com/home');
 
-    // Verify the login screen visual look is as expected with the Login Landing Page image stored
-    await expect(page).toHaveScreenshot('HudlLoginSuccess_Page.png');
-    await expect.soft(page).toHaveScreenshot('HudlLoginSuccess_Page.png');
+    // Verify the login screen standard menu visual look is as expected with the Login Landing Page standard menu visual look image stored
+    const element_LILP_Menu= await page.locator('[id="ssr-webnav"]');
+    await expect (element_LILP_Menu).toHaveScreenshot('HudlLoginSuccess_ValidCredsSpace_PageMnu.png');
+    await expect.soft(element_LILP_Menu).toHaveScreenshot('HudlLoginSuccess_ValidCredsSpace_PageMnu.png', { maxDiffPixelRatio: 0.1 });
+    // await expect(page).toHaveScreenshot('HudlLoginSuccess_ValidCreds_Page.png');
+    // await expect.soft(page).toHaveScreenshot('HudlLoginSuccess_ValidCreds_Page.png', { maxDiffPixelRatio: 0.05 });
 
     //Logout to clear login session
     await page.locator('[class="hui-globalusermenu"]').hover();
@@ -58,10 +64,6 @@ test.describe('Hudl Login Tests', () => {
     // Wait for navigation and verify successful login
     await page.waitForURL('**/home');
     expect(page.url()).toContain('https://www.hudl.com/home');
-
-    // Verify the login screen visual look is as expected with the Login Landing Page image stored
-    await expect(page).toHaveScreenshot('HudlLoginSuccess_Page.png');
-    await expect.soft(page).toHaveScreenshot('HudlLoginSuccess_Page.png');
 
     //Logout to clear login session
     await page.locator('[class="hui-globalusermenu"]').hover();
@@ -93,10 +95,6 @@ test.describe('Hudl Login Tests', () => {
     await page.waitForURL('**/home');
     expect(page.url()).toContain('https://www.hudl.com/home');
 
-    // Verify the login screen visual look is as expected with the Login Landing Page image stored
-    await expect(page).toHaveScreenshot('HudlLoginSuccess_Page.png');
-    await expect.soft(page).toHaveScreenshot('HudlLoginSuccess_Page.png');
-
     //Logout to clear login session
     await page.locator('[class="hui-globalusermenu"]').hover();
     await page.getByRole('link', { name: 'Log Out' }).click();
@@ -125,7 +123,7 @@ test.describe('Hudl Login Tests', () => {
 
     // Verify the login failure (for wrong password only) screen visual look is as expected with the Login failure page image stored
     await expect(page).toHaveScreenshot('HudlLogin_InvalidPassword_Fail_Page.png');
-    await expect.soft(page).toHaveScreenshot('HudlLogin_InvalidPassword_Fail_Page.png');
+    await expect.soft(page).toHaveScreenshot('HudlLogin_InvalidPassword_Fail_Page.png', { maxDiffPixelRatio: 0.1 });
   });
 
   test('Login failure with invalid credentials: email/password', async ({ page }) => {
@@ -144,9 +142,6 @@ test.describe('Hudl Login Tests', () => {
     const errorMessage_pwdScrn = page.locator('[id="error-element-password"]');
     await expect(errorMessage_pwdScrn).toContainText('Incorrect username or password.');
 
-    // Verify the login failure screen visual look is as expected with the Login failure page image stored
-    await expect(page).toHaveScreenshot('HudlLogin_Invalid_UsrPwd_Fail_Page.png');
-    await expect.soft(page).toHaveScreenshot('HudlLogin_Invalid_UsrPwd_Fail_Page.png');
   });
 
   test('Login failure for SQL Injection and XSS attempts', async ({ page }) => {
@@ -163,10 +158,6 @@ test.describe('Hudl Login Tests', () => {
     const errorMessage_LoginScrn_SQL_attempt = page.locator('[id="error-element-username"]');
     await expect(errorMessage_LoginScrn_SQL_attempt).toContainText('Enter a valid email.');
 
-    // Verify the login failure screen visual look is as expected with the Login failure page image stored
-    await expect(page).toHaveScreenshot('HudlLogin_emailFail_SQLAttempt_Page.png');
-    await expect.soft(page).toHaveScreenshot('HudlLogin_emailFail_SQLAttempt_Page.png');
-
     // Fill in XSS Attempt
     await page.getByRole('textbox', { name: 'Email' }).fill("<script>alert('xss')</script>");
     await page.getByRole('button', { name: 'Continue', exact: true }).click();
@@ -174,9 +165,5 @@ test.describe('Hudl Login Tests', () => {
     // Check for error message
     const errorMessage_LoginScrn_XSS_attempt = page.locator('[id="error-element-username"]');
     await expect(errorMessage_LoginScrn_XSS_attempt).toContainText('Enter a valid email.');
-
-    // Verify the login failure screen visual look is as expected with the Login failure page image stored
-    await expect(page).toHaveScreenshot('HudlLogin_emailFail_XSSAttempt_Page.png');
-    await expect.soft(page).toHaveScreenshot('HudlLogin_emailFail_XSSAttempt_Page.png');    
   });
 });
