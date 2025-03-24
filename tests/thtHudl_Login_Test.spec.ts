@@ -2,13 +2,15 @@ import { test, expect } from '@playwright/test';
 import { getEnv } from '../utils/env';
 
 test.beforeAll(async() => {
-  // Code to run before all tests in spec file
-  console.log("HUDL Login Tests Starting....")
+  // Get the browser name from test.info() for each test run
+  const browserName = test.info().project.name;
+  console.log(`Starting HUDL Login tests on browser: ${browserName}`);
 });
 
 test.afterAll(async() => {
-  // Code to be run after all tests in spec file.
-  console.log("HUDL Login Tests Completed.")
+  // Get the browser name from test.info() for each test run
+  const browserName = test.info().project.name;
+  console.log(`Completed HUDL Login tests on browser: ${browserName}`);
 });
 
 test.describe('Hudl Login Tests', () => {
@@ -20,6 +22,16 @@ test.describe('Hudl Login Tests', () => {
     // Login successfully with valid credentials
     // Login successfully with valid credentials and prefix/suffix white spaces in Username trimmed
     // Login successfully with valid credentials after wrong email edited back from password screen
+
+  test.beforeEach(async () => {
+    // This will run before each test
+    console.log(`Test started: ${test.title()}`);
+  });
+  
+  test.afterEach(async () => {
+    // This will run after each test, logging the completion
+    console.log(`Test ended: ${test.title()}`);
+  });
 
   test('Login successfully with valid credentials', async ({ page }) => {
     // Navigate to Hudl Home page and to the login page
