@@ -25,12 +25,12 @@ test.describe('Hudl Login Tests', () => {
 
   test.beforeEach(async () => {
     // This will run before each test
-    console.log(`Test started: ${test.title()}`);
+    console.log(`Test started: ${test.info().title}`);
   });
   
   test.afterEach(async () => {
     // This will run after each test, logging the completion
-    console.log(`Test ended: ${test.title()}`);
+    console.log(`Test ended: ${test.info().title}`);
   });
 
   test('Login successfully with valid credentials', async ({ page }) => {
