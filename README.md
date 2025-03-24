@@ -75,6 +75,19 @@ HUDL_PASSWORD=your_password</code></pre>
     <li>Select the <strong>Playwright Tests</strong> workflow.</li>
     <li>Click the <strong>Run workflow</strong> button to manually start the tests.</li>
   </ol>
+    <h4>Additional Git Notes:</h4>
+    <ul>
+        <li>
+        <strong>Secrets:</strong> Ensure <code>HUDL_USERNAME</code> and <code>HUDL_PASSWORD</code> are set in GitHub “Repository Secrets” (Settings > Secrets and variables > Actions > Secrets > “Repository Secrets” section) for the SVthtHudl repository.
+        </li>
+        <li>
+        <strong>Permissions:</strong> For pushing changes (e.g., snapshots), the workflow needs write access. The default <code>GITHUB_TOKEN</code> provides this for the repo.
+        <ul>
+            <li>Go to “Settings/Actions” for the SVthtHudl repository.</li>
+            <li>Under “Workflow permissions,” ensure “Read and write permissions” is selected for Actions (default for most repos).</li>
+        </ul>
+        </li>
+    </ul> 
 
   <h2>Directory Structure</h2>
   <pre><code>SVthtHudl/
